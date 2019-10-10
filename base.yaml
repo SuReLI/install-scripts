@@ -1,0 +1,87 @@
+- hosts: localhost
+  become: true
+  tasks:
+  - name: Update system
+    apt:
+      update_cache: yes
+      upgrade: dist
+  - name: Install ssh
+    apt:
+      name:
+        - openssh-client
+        - openssh-server
+  - name: Start ssh server
+    systemd:
+      name: sshd
+      state: started
+      enabled: yes
+  - name: Install general utilities
+    apt:
+      name:
+        - aptitude
+        - diffutils
+        - dvipng
+        - firefox-locale-en
+        - firefox-locale-fr
+        - fonts-indic
+        - git
+        - grep
+        - gzip
+        - htop
+        - hyphen-en-us
+        - k3b-i18n
+        - language-pack-en
+        - language-pack-en-base
+        - language-pack-fr
+        - language-pack-fr-base
+        - libpcre3-dev
+        - lm-sensors
+        - mythes-en-us
+        - mosh
+        - os-prober
+        - python3
+        - python3-pip
+        - swig
+        - tmux
+        - vim
+        - wbritish
+  - name: Install python packages
+    pip:
+      executable: pip3
+      name:
+        - chardet
+        - cloudpickle
+        - cryptography
+        - future
+        - gast
+        - grpcio
+        - h5py
+        - idna
+        - imageio
+        - kiwisolver
+        - Markdown
+        - mkl-fft
+        - mkl-random
+        - Pillow
+        - protobuf
+        - pycosat
+        - pycparser
+        - pygame
+        - pyglet
+        - pyOpenSSL
+        - pyparsing
+        - PySocks
+        - python-dateutil
+        - pytz
+        - PyYAML
+        - requests
+        - ruamel-yaml
+        - six
+        - termcolor
+        - tqdm
+        - urllib3
+        - Werkzeug
+  - name: Clean system
+    apt:
+      autoclean: yes
+      autoremove: yes
