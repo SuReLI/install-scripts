@@ -1,0 +1,86 @@
+- hosts: localhost
+  become: true
+  tasks:
+  - name: Update system
+    apt:
+      update_cache: yes
+      upgrade: dist
+  - name: Install nvidia drivers
+    command: ubuntu-drivers autoinstall
+  - name: Install general utilities
+    apt: name={{item}} state=installed
+    with_items:
+      - aptitude
+      - diffutils
+      - dvipng
+      - firefox-locale-en
+      - firefox-locale-fr
+      - fonts-indic
+      - git
+      - grep
+      - gzip
+      - htop
+      - hyphen-en-us
+      - k3b-i18n
+      - language-pack-en
+      - language-pack-en-base
+      - language-pack-fr
+      - language-pack-fr-base
+      - libpcre3-dev
+      - lm-sensors
+      - mythes-en-us
+      - os-prober
+      - sublime-text
+      - tmux
+      - vim
+      - wbritish
+  - name: Install python packages
+    pip: name={{item}}
+    with_items:
+      - atari-py
+      - box2d-py
+      - chardet
+      - cloudpickle
+      - cryptography
+      - future
+      - gast
+      - grpcio
+      - gym
+      - gym-ple
+      - h5py
+      - idna
+      - imageio
+      - keras
+      - kiwisolver
+      - Markdown
+      - matplotlib
+      - mkl-fft
+      - mkl-random
+      - numpy
+      - opencv-python
+      - pandas
+      - Pillow
+      - protobuf
+      - pycosat
+      - pycparser
+      - pygame
+      - pyglet
+      - PyOpenGL
+      - pyOpenSSL
+      - pyparsing
+      - PySocks
+      - python-dateutil
+      - pytz
+      - PyYAML
+      - requests
+      - roboschool
+      - ruamel-yaml
+      - scipy
+      - six
+      - tensorflow-gpu
+      - termcolor
+      - torch
+      - torchvision
+      - tqdm
+      - urllib3
+      - Werkzeug
