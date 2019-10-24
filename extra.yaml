@@ -15,8 +15,10 @@
         - jupyter
         - vlc
         - zeal
+        - rename
   - name: Install snaps
     snap:
+      classic: yes
       name: 
         - slack
         - atom

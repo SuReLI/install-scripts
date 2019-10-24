@@ -44,10 +44,32 @@
     apt_repository:
       repo: deb http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/ /
       state: present
-  - name: Install CUDA
+  - name: Install CUDA and CUDNN
     apt:
-      name: cuda
+      name:
+        - cuda
+        - cuda-10-0
+        - libcudnn7
+        - libcudnn7-dev
+        - libnccl2
+        - libc-ares-dev
       state: present
+  - name: CUDA10 NCCL directory
+    file:
+      path: "/usr/local/cuda-10.0/nccl/lib"
+      state: directory
+      mode: '0755'
+  - name: NCCL symlink
+    file:
+      src: "/usr/lib/x86_64-linux-gnu/libnccl.so.2"
+      dest: "/usr/local/cuda/nccl/lib/libnccl.so.2"
+      state: link
+  - name: CUNDD symlink
+    file:
+      src: "/usr/lib/x86_64-linux-gnu/libcudnn.so.7"
+      dest: "/usr/local/cuda-10.0/lib64/libcudnn.so.7"
+      state: link
+    https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
   - name: Install deep learning python libraries
     pip:
       executable: pip3
@@ -62,6 +84,7 @@
         - opencv-python
         - pandas
         - PyOpenGL
+        - pybullet
         - roboschool
         - scipy
         - tensorflow-gpu
