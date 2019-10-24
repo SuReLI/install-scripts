@@ -27,6 +27,7 @@
     when: nouveau.changed
   - name: Install nvidia drivers
     command: ubuntu-drivers autoinstall
+    when: nouveau.changed
   - name: Check if CUDA is downloaded
     stat:
       path: /etc/apt/preferences.d/cuda-repository-pin-600
@@ -44,6 +45,13 @@
     apt_repository:
       repo: deb http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/ /
       state: present
+  - name: Add CUDNN repository
+    apt_repository:
+      repo: deb http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/ /
+      state: present
+  - name: Update system
+    apt:
+      update_cache: yes
   - name: Install CUDA and CUDNN
     apt:
       name:
@@ -69,7 +77,6 @@
       src: "/usr/lib/x86_64-linux-gnu/libcudnn.so.7"
       dest: "/usr/local/cuda-10.0/lib64/libcudnn.so.7"
       state: link
-    https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
   - name: Install deep learning python libraries
     pip:
       executable: pip3
